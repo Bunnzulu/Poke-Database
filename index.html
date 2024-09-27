@@ -1,18 +1,25 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Poke Search</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="Maindiv">
         <h1>Poke Search</h1>
-        <label for="">Term:</label><br>
-        <input type="text">
-        <button>Search</button>
         <div id="SearchOptions">
+            <button class="Enabled" id="pokemon">Pokemon</button>
+            <button class="Disabled" id="type">Type</button>
+            <button class="Disabled" id="ability">Ability</button>
+            <button class="Disabled" id="pokemon-species">Species</button>
         </div>
+        <label>Term:</label>
+        <input type="text" id="SearchInput"><br>
+        <button id="SearchButton">Search</button>
     </div>
+    <div id="Results"></div>
+    <script src="script.js"></script>
 </body>
 </html>
