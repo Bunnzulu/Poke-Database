@@ -46,9 +46,10 @@ Array.from(document.getElementById("SearchOptions").children).forEach(element =>
 });
 
 function Display_Data(data, catagory) {
+    let Name = data.name.charAt(0).toUpperCase() + data.name.slice(1)
     switch (catagory) {
         case "pokemon":
-        let Name = data.name.charAt(0).toUpperCase() + data.name.slice(1)
+        Name = data.name.charAt(0).toUpperCase() + data.name.slice(1)
         let Type1 = data.types[0].type.name.charAt(0).toUpperCase() + data.types[0].type.name.slice(1)
         let Type2 = data.types.length > 1 ? data.types[1].type.name.charAt(0).toUpperCase() + data.types[1].type.name.slice(1) : ""
         let Types = Type2 == "" ? Type1 : `${Type1}/${Type2}`
@@ -86,6 +87,33 @@ function Display_Data(data, catagory) {
             </div>
         `;
             break;
+        
+        case "type":
+            Name = data.name.charAt(0).toUpperCase() + data.name.slice(1)
+            let zerodamageto = data.damage_relations.no_damage_to.length > 0 ? data.damage_relations.no_damage_to: [{name:"None"}]
+            document.getElementById("Results").innerHTML = `
+            <h1>${Name}</h1><br>
+            <div id="Offensive">
+            <table>
+            <tr>
+            <th id="TableName">Offensive</th>
+            </tr>
+            <tr>
+            <th>2x Damage to:<th>
+            ${data.damage_relations.double_damage_to.map(type => `<td>${type.name.charAt(0).toUpperCase() + type.name.slice(1)}</td>`).join("")}
+            </tr>
+            <tr>
+            <th>1/2x Damage to:<th>
+            ${data.damage_relations.half_damage_to.map(type => `<td>${type.name.charAt(0).toUpperCase() + type.name.slice(1)}</td>`).join("")}
+            </tr>
+            <tr>
+            <th>0x Damage to:<th>
+            ${zerodamageto.map(type => `<td>${type.name.charAt(0).toUpperCase() + type.name.slice(1)}</td>`).join("")}
+            </tr>
+            </table>
+            </div>
+     
+            `;
         default:
             console.log(data)
             break;

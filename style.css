@@ -38,10 +38,17 @@ h2 {
     font-family: 'Times New Roman', Times, serif;
 }
 
+h3 {
+    color: white;
+    font-size: 1.5rem;
+    font-family: 'Times New Roman', Times, serif;
+}
+
 h1#Title {
     margin-top: 0;
     margin-bottom: 0;
 }
+
 
 body {
     background-color: black;
@@ -76,6 +83,14 @@ button {
     border-radius: 5px;
     font-size: 20px;
     margin-top: 10px;
+}
+
+.ImgControlButtons:hover {
+    background-color: rgb(200, 0, 0);
+}
+
+.ImgControlButtons:active {
+    background-color: rgb(150, 0, 0);
 }
 
 #SearchButton {
@@ -155,4 +170,33 @@ figcaption {
     position: absolute;
     top: 0;
     right: 0;
+}
+
+
+#Offensive {
+    width: 50%; /* Adjust width as needed */
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+}
+
+#Offensive table {
+    width: 50%;
+}
+
+#Offensive th {
+    color: white;
+    font-size: 1.5rem;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+#Offensive td {
+    color: white;
+    font-size: 1.3rem;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+#TableName {
+    text-align: right;
 }
