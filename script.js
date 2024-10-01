@@ -89,14 +89,17 @@ function Display_Data(data, catagory) {
             break;
         
         case "type":
+            console.log(TypeColors[data.name])
             Name = data.name.charAt(0).toUpperCase() + data.name.slice(1)
             let zerodamageto = data.damage_relations.no_damage_to.length > 0 ? data.damage_relations.no_damage_to: [{name:"None"}]
+            let zerodamagefrom = data.damage_relations.no_damage_from.length > 0 ? data.damage_relations.no_damage_from: [{name:"None"}]
+            let typeColor1 = TypeColors[data.name]
             document.getElementById("Results").innerHTML = `
             <h1>${Name}</h1><br>
             <div id="Offensive">
             <table>
             <tr>
-            <th id="TableName">Offensive</th>
+            <th class="TableName">Offensive</th>
             </tr>
             <tr>
             <th>2x Damage to:<th>
@@ -112,8 +115,37 @@ function Display_Data(data, catagory) {
             </tr>
             </table>
             </div>
-     
+
+            <div id="TypeofPoke">
+            <h2>${Name} Pokemon</h2>
+            ${data.pokemon.map(type => `<p>${type.pokemon.name.charAt(0).toUpperCase() + type.pokemon.name.slice(1)}</p>`).join("")}
+            </div>
+            <div id="TypeofMove">
+            <h2>${Name} Moves</h2>
+            ${data.moves.map(move => `<p>${move.name.charAt(0).toUpperCase() + move.name.slice(1)}</p>`).join("")}
+            </div>
+
+            <div id="Defensive">
+            <table>
+            <tr>
+            <th class="TableName">Defensive</th>
+            </tr>
+            <tr>
+            <th>2x Damage from:<th>
+            ${data.damage_relations.double_damage_from.map(type => `<td>${type.name.charAt(0).toUpperCase() + type.name.slice(1)}</td>`).join("")}
+            </tr>
+            <tr>
+            <th>1/2x Damage from:<th>
+            ${data.damage_relations.half_damage_from.map(type => `<td>${type.name.charAt(0).toUpperCase() + type.name.slice(1)}</td>`).join("")}
+            </tr>
+            <tr>
+            <th>0x Damage from:<th>
+            ${zerodamagefrom.map(type => `<td>${type.name.charAt(0).toUpperCase() + type.name.slice(1)}</td>`).join("")}
+            </tr>
+            </table>
+            </div>
             `;
+
         default:
             console.log(data)
             break;
