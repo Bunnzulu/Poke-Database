@@ -23,6 +23,7 @@ let TypeColors = {"normal":"#A8A77A","fire":"#EE8130","water":"#6390F0","electri
 // steel: grey
 // fairy: pink
 
+let Mode = "Dark"
 
 function Turn_Off_Selection(){
     let btns = document.getElementById("SearchOptions").children
@@ -69,14 +70,14 @@ function Display_Data(data, catagory) {
                 <button class="ImgControlButtons" onclick="nextSlide()">Next</button>
             </div>
             </div>
-            <div id="PokeInfo">
+            <div id="PokeInfo" class="Left">
             <h2>Type: ${Types}</h2>
             <p>Height: ${data.height} inches</p>
             <p>Weight: ${data.weight} lbs</p>
             <p>Abilty 1: ${Abilty1}</p>
             <p>Abilty 2: ${Abilty2}</p>
             </div>
-            <div id="PokeStats">
+            <div id="PokeStats" class="Right">
             <h2>Stats</h2>
             <p>HP: ${data.stats[0].base_stat}</p>
             <p>Attack: ${data.stats[1].base_stat}</p>
@@ -89,14 +90,12 @@ function Display_Data(data, catagory) {
             break;
         
         case "type":
-            console.log(TypeColors[data.name])
             Name = data.name.charAt(0).toUpperCase() + data.name.slice(1)
             let zerodamageto = data.damage_relations.no_damage_to.length > 0 ? data.damage_relations.no_damage_to: [{name:"None"}]
             let zerodamagefrom = data.damage_relations.no_damage_from.length > 0 ? data.damage_relations.no_damage_from: [{name:"None"}]
-            let typeColor1 = TypeColors[data.name]
             document.getElementById("Results").innerHTML = `
             <h1>${Name}</h1><br>
-            <div id="Offensive">
+            <div id="Offensive" class="Left">
             <table>
             <tr>
             <th class="TableName">Offensive</th>
@@ -125,7 +124,7 @@ function Display_Data(data, catagory) {
             ${data.moves.map(move => `<p>${move.name.charAt(0).toUpperCase() + move.name.slice(1)}</p>`).join("")}
             </div>
 
-            <div id="Defensive">
+            <div id="Defensive" class="Right">
             <table>
             <tr>
             <th class="TableName">Defensive</th>
@@ -145,10 +144,53 @@ function Display_Data(data, catagory) {
             </table>
             </div>
             `;
-
-        default:
-            console.log(data)
             break;
+        
+        case "ability":
+            console.log(data)
+            Name = data.name.charAt(0).toUpperCase() + data.name.slice(1)
+            let Effect = data.effect_entries[0].language.name === "en" ? data.effect_entries[0].effect : data.effect_entries[1].effect
+            document.getElementById("Results").innerHTML = `
+                <h1>${Name}</h1>
+                <div id="AbilityInfo" class="Left">
+                <h2>Effect</h2>
+                <p>${Effect}</p>
+                </div>
+                <div id="PokewAbility">
+                <h2>Pokemon with ${Name}</h2>
+                ${data.pokemon.map(poke => `<p>${poke.pokemon.name.charAt(0).toUpperCase() + poke.pokemon.name.slice(1)}</p>`).join("")}
+                </div>
+                <div id="DateAdded" class="Right">
+                <h2>Date Added</h2>
+                <p>${data.generation.name.charAt(0).toUpperCase() + data.generation.name.slice(1)}</p>
+                </div>
+            `;
+            break;
+        
+        case "pokemon-species":
+            console.log(data)
+            Name = data.name.charAt(0).toUpperCase() + data.name.slice(1)
+            let prevevo = data.evolves_from_species == null ? "Nothing" : data.evolves_from_species.name.charAt(0).toUpperCase() + data.evolves_from_species.name.slice(1)
+            let flavortext = data.flavor_text_entries.filter(entry => entry.language.name === "en")
+            document.getElementById("Results").innerHTML = `
+                <h1>${Name}</h1>
+                <div id="SpeciesInfo" class="Left">
+                <h2>Egg Group:</h2>
+                ${data.egg_groups.map(egg => `<p>${egg.name.charAt(0).toUpperCase() + egg.name.slice(1)}</p><br>`).join("")}
+                <h2>Color:</h2>
+                <p>${data.color.name.charAt(0).toUpperCase() + data.color.name.slice(1)}</p>
+                </div>
+
+                <div id="Evolution">
+                <h2>Evolution Chain</h2>
+                <p>Evolves from ${prevevo}</p>
+                </div>
+
+                <div id="SpeciesDesc" class="Right">
+                <h2>Description</h2>
+                <p>${flavortext[flavortext.length - 1].flavor_text}</p>
+                </div>
+            `;
     }
 
 }
@@ -216,4 +258,20 @@ function SetCaption(Index) {
     }
     ImgCaption += "Sprite"
     document.getElementById("PokeImageCaption").innerText = ImgCaption
+}
+
+function ModeChange(){
+    let texts = ["p","h1","h2","h3","label"]
+    if (Mode == "Dark") {
+        document.body.style.backgroundColor = "white"
+        document.body.style.color = "black"
+        document.getElementById("ModeSwitch").style.backgroundColor = "Black"
+        document.getElementById("SearchOptions").style.backgroundColor = "White"
+        Mode = "Light"
+        
+    }
+}
+
+document.getElementById("ModeSwitch").onclick = function() {
+    ModeChange()
 }
