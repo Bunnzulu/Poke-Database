@@ -59,7 +59,7 @@ function Display_Data(data, catagory) {
         let Color1 = TypeColors[Type1.toLowerCase()]
         Images = data.sprites
         document.getElementById("Results").innerHTML = `
-            <h1 style="color: ${Color1};">${Name}</h1><br>
+            <h1 style="color: ${Color1};" id="PokeName">${Name}</h1><br>
             <div class="ImageContainer">
                 <figure>
                 <img id="PokeImage" src="${Images[ImageOptions[SilderIndex]]}" alt="${Name}'s ${ImageOptions[SilderIndex]}">
@@ -261,17 +261,68 @@ function SetCaption(Index) {
 }
 
 function ModeChange(){
-    let texts = ["p","h1","h2","h3","label"]
-    if (Mode == "Dark") {
+    let texts = ["p","h1","h2","h3","label","figcaption","th","td"]
+    if (Mode == "Light") {
         document.body.style.backgroundColor = "white"
         document.body.style.color = "black"
         document.getElementById("ModeSwitch").style.backgroundColor = "Black"
         document.getElementById("SearchOptions").style.backgroundColor = "White"
-        Mode = "Light"
-        
+        document.getElementById("SearchInput").style.color = "White"
+        document.getElementById("SearchInput").style.backgroundColor = "Black"
+        for (let i = 0; i < texts.length; i++) {
+            Array.from(document.getElementsByTagName(texts[i])).forEach(element => {
+                if (element.id !== "PokeName"){
+                    element.style.color = "black"
+                }
+            });
+        }
+        Array.from(document.getElementsByTagName("button")).forEach(element => {
+            if (element.classList.contains("Enabled")){
+                element.style.backgroundColor = "red"
+            } else {
+                element.style.backgroundColor = "black"
+                element.style.color = "white"
+            }
+        });
+    } else {
+        document.body.style.backgroundColor = "black"
+        document.body.style.color = "white"
+        document.getElementById("ModeSwitch").style.backgroundColor = "White"
+        document.getElementById("SearchOptions").style.backgroundColor = "Black"
+        document.getElementById("SearchInput").style.color = "Black"
+        document.getElementById("SearchInput").style.backgroundColor = "White"
+        for (let i = 0; i < texts.length; i++) {
+            Array.from(document.getElementsByTagName(texts[i])).forEach(element => {
+                if (element.id !== "PokeName"){
+                    element.style.color = "white"
+                }
+            });
+        }
+        Array.from(document.getElementsByTagName("button")).forEach(element => {
+            if (element.classList.contains("Enabled") || element.id == "SearchButton"){
+                element.style.backgroundColor = "red"
+                if (element.classList.contains("Enabled")){
+                    element.style.color = "black"
+                }
+            } else if (element.classList.contains("Disabled")){
+                element.style.backgroundColor = "black"
+                element.style.color = "red"
+
+            } else {
+                element.style.backgroundColor = "white"
+                element.style.color = "black"
+            }
+        });
     }
 }
 
 document.getElementById("ModeSwitch").onclick = function() {
+    if (Mode == "Light") {
+        Mode = "Dark"
+    } else {
+        Mode = "Light"
+    }
     ModeChange()
 }
+
+setInterval(ModeChange,10)

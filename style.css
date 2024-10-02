@@ -143,9 +143,9 @@ figure {
 }
 
 figure img {
-    width: 50%;
-    height: 50%; 
-    object-fit: cover;
+    width: 300px;
+    height: 300px; 
+    object-fit: contain;
 }
 
 figcaption {
@@ -173,9 +173,26 @@ figcaption {
     right: 0;
 }
 
+#PokeInfo {
+    /* background-color: green; */
+    width: 25%;
+}
+
+#PokeStats {
+    /* background-color: salmon; */
+    width: 25%;
+}
 
 #Offensive table {
     width: 50%;
+}
+
+#Defensive table {
+    width: 50%;
+}
+
+#Defensive {
+    width : 40%;
 }
 
 #Offensive th {
@@ -214,14 +231,6 @@ figcaption {
     color: white;
     font-size: 1.3rem;
     font-family: 'Times New Roman', Times, serif;
-}
-
-#Defensive {
-    right: -200;
-}
-
-#Defensive table {
-    width: 50%;
 }
 
 #AbilityInfo {
